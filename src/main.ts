@@ -156,16 +156,19 @@ function maybeRenderInstructions() {
 function updateSectionNav() {
   const nav = document.getElementById('section-nav');
   if (!nav) return;
+  let anyVisible = false;
   for (const item of nav.querySelectorAll<HTMLLIElement>('li')) {
     const a = item.querySelector<HTMLAnchorElement>('a');
     const targetId = a?.dataset.section ?? '';
-    if (targetId === 'top') {
-      item.classList.remove('nav-disabled');
-      continue;
-    }
+    if (targetId === 'top') continue;
     const target = document.getElementById(targetId);
-    item.classList.toggle('nav-disabled', !target || target.hidden);
+    const visible = !!target && !target.hidden;
+    item.classList.toggle('nav-disabled', !visible);
+    if (visible) anyVisible = true;
   }
+  const topItem = nav.querySelector<HTMLLIElement>('li:has(a[data-section="top"])');
+  if (topItem) topItem.classList.toggle('nav-disabled', !anyVisible);
+  nav.hidden = !anyVisible;
 }
 
 function setupSectionScrollSpy() {
@@ -1577,37 +1580,38 @@ function mountClearButton() {
 async function init() {
   mountClearButton();
   const persisted = await loadPersisted();
-  if (!persisted) return;
-  if (persisted.graphView === 'a' || persisted.graphView === 'b') {
-    graphView = persisted.graphView;
-  }
-  if (typeof persisted.graphHideUnchanged === 'boolean') {
-    graphHideUnchanged = persisted.graphHideUnchanged;
-  }
-  if (typeof persisted.entryDynamicSearch === 'string') {
-    entryDynamicSearch = persisted.entryDynamicSearch;
-  }
-  if (Array.isArray(persisted.graphHiddenChunks)) {
-    setHiddenChunkNames(persisted.graphHiddenChunks);
-  }
-  for (const side of ['a', 'b'] as const) {
-    const ps = persisted[side];
-    if (ps?.stats) {
-      try {
-        state[side].stats = {
-          filename: ps.stats.filename,
-          raw: ps.stats.raw,
-          data: parseBundleStats(ps.stats.raw),
-        };
-      } catch (err) {
-        console.warn(`vite-compare: failed to restore stats ${side}`, err);
+  if (persisted) {
+    if (persisted.graphView === 'a' || persisted.graphView === 'b') {
+      graphView = persisted.graphView;
+    }
+    if (typeof persisted.graphHideUnchanged === 'boolean') {
+      graphHideUnchanged = persisted.graphHideUnchanged;
+    }
+    if (typeof persisted.entryDynamicSearch === 'string') {
+      entryDynamicSearch = persisted.entryDynamicSearch;
+    }
+    if (Array.isArray(persisted.graphHiddenChunks)) {
+      setHiddenChunkNames(persisted.graphHiddenChunks);
+    }
+    for (const side of ['a', 'b'] as const) {
+      const ps = persisted[side];
+      if (ps?.stats) {
+        try {
+          state[side].stats = {
+            filename: ps.stats.filename,
+            raw: ps.stats.raw,
+            data: parseBundleStats(ps.stats.raw),
+          };
+        } catch (err) {
+          console.warn(`vite-compare: failed to restore stats ${side}`, err);
+        }
       }
     }
-  }
-  for (const elNode of uploaders) {
-    const side = elNode.dataset.side as Side;
-    const status = elNode.querySelector<HTMLDivElement>('[data-status]')!;
-    renderStatus(side, status, []);
+    for (const elNode of uploaders) {
+      const side = elNode.dataset.side as Side;
+      const status = elNode.querySelector<HTMLDivElement>('[data-status]')!;
+      renderStatus(side, status, []);
+    }
   }
   renderAll();
   setupSectionScrollSpy();
