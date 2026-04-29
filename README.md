@@ -68,5 +68,3 @@ pnpm dev        # http://localhost:5173
 pnpm build      # production build into dist/
 pnpm typecheck
 ```
-
-The deployed build at the URL above is produced by the `.github/workflows/deploy.yml` workflow, which pushes `dist/` to the `gh-pages` branch on every push to `main`.
