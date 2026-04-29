@@ -190,6 +190,24 @@ code {
   color: var(--muted);
 }
 
+.demo-btn {
+  background: #fff;
+  color: #0f1115;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.demo-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+.demo-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
 #instructions {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -599,9 +617,18 @@ code {
 }
 
 .uploaders-toolbar {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   margin: -16px 0 24px;
+}
+.uploaders-toolbar .demo-btn {
+  grid-column: 1;
+  justify-self: start;
+}
+.uploaders-toolbar .clear-btn {
+  grid-column: 2;
+  justify-self: end;
 }
 .clear-btn {
   background: transparent;

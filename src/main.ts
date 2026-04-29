@@ -107,6 +107,57 @@ for (const el of uploaders) {
   });
 }
 
+async function loadDemoData() {
+  const btn = document.getElementById('use-demo') as HTMLButtonElement | null;
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Loading demo…';
+  }
+  try {
+    const [aRes, bRes] = await Promise.all([
+      fetch(new URL('./demo/before.json', document.baseURI).href),
+      fetch(new URL('./demo/after.json', document.baseURI).href),
+    ]);
+    if (!aRes.ok || !bRes.ok) {
+      throw new Error(`HTTP ${aRes.status} / ${bRes.status}`);
+    }
+    const [aText, bText] = await Promise.all([aRes.text(), bRes.text()]);
+    for (const [side, raw, filename] of [
+      ['a', aText, 'before.json'],
+      ['b', bText, 'after.json'],
+    ] as const) {
+      const parsed = JSON.parse(raw);
+      if (detectFormat(parsed) !== 'stats') {
+        throw new Error(`${filename}: not a bundle-stats.json`);
+      }
+      state[side].stats = {
+        filename,
+        raw,
+        data: parseBundleStats(raw),
+      };
+      invalidateTrace(side);
+    }
+    for (const elNode of uploaders) {
+      const side = elNode.dataset.side as Side;
+      const status = elNode.querySelector<HTMLDivElement>('[data-status]')!;
+      renderStatus(side, status, []);
+    }
+    renderAll();
+    void persistState();
+  } catch (err) {
+    console.error('vite-compare: failed to load demo data', err);
+    if (btn) {
+      btn.textContent = 'Demo failed — try again';
+      btn.disabled = false;
+    }
+    return;
+  }
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = 'Use demo data';
+  }
+}
+
 async function handleFiles(
   side: Side,
   files: FileList,
@@ -148,9 +199,11 @@ function renderAll() {
 }
 
 function maybeRenderInstructions() {
+  const hasAny = !!(state.a.stats || state.b.stats);
   const section = document.getElementById('instructions');
-  if (!section) return;
-  section.hidden = !!(state.a.stats || state.b.stats);
+  if (section) section.hidden = hasAny;
+  const demoBtn = document.getElementById('use-demo');
+  if (demoBtn) demoBtn.hidden = hasAny;
 }
 
 function updateSectionNav() {
@@ -1567,18 +1620,31 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeInspector();
 });
 
-function mountClearButton() {
+function mountUploadersToolbar() {
   const host = document.querySelector('.uploaders');
   if (!host) return;
   const wrap = el('div', { class: 'uploaders-toolbar' });
-  const btn = el('button', { class: 'clear-btn', type: 'button' }, 'Clear all');
-  btn.addEventListener('click', () => clearAll());
-  wrap.append(btn);
+
+  const demoBtn = el(
+    'button',
+    { id: 'use-demo', class: 'demo-btn', type: 'button' },
+    'Use demo data',
+  ) as HTMLButtonElement;
+  demoBtn.addEventListener('click', () => void loadDemoData());
+
+  const clearBtn = el(
+    'button',
+    { class: 'clear-btn', type: 'button' },
+    'Clear all',
+  );
+  clearBtn.addEventListener('click', () => clearAll());
+
+  wrap.append(demoBtn, clearBtn);
   host.parentNode!.insertBefore(wrap, host.nextSibling);
 }
 
 async function init() {
-  mountClearButton();
+  mountUploadersToolbar();
   const persisted = await loadPersisted();
   if (persisted) {
     if (persisted.graphView === 'a' || persisted.graphView === 'b') {

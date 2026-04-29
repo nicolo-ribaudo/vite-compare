@@ -1,0 +1,253 @@
+{
+  "version": 2,
+  "viteVersion": "7.1.0",
+  "label": "before refactor",
+  "generatedAt": "2026-04-01T10:00:00.000Z",
+  "chunks": [
+    {
+      "key": "index-Bk1aZ9.js",
+      "fileName": "assets/index-Bk1aZ9.js",
+      "src": "src/main.tsx",
+      "name": "index",
+      "isEntry": true,
+      "isDynamicEntry": false,
+      "facadeModuleId": "/src/main.tsx",
+      "imports": ["assets/vendor-Cf3xQ2.js"],
+      "dynamicImports": [
+        "assets/router-D4kP1m.js",
+        "assets/dashboard-Ee5Lx0.js",
+        "assets/legacy-Aq9Rt7.js"
+      ],
+      "css": ["assets/index-Z1aBcD.css"],
+      "assets": [],
+      "moduleCount": 4,
+      "modules": [
+        {
+          "id": "/src/main.tsx",
+          "renderedLength": 420,
+          "originalLength": 580,
+          "removedExports": [],
+          "renderedExports": [],
+          "importedIds": ["/src/App.tsx", "/node_modules/react-dom/client.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/App.tsx",
+          "renderedLength": 1250,
+          "originalLength": 1890,
+          "removedExports": [],
+          "renderedExports": ["default"],
+          "importedIds": [
+            "/src/header.tsx",
+            "/src/footer.tsx",
+            "/node_modules/react/index.js"
+          ],
+          "dynamicallyImportedIds": [
+            "/src/routes/index.tsx",
+            "/src/routes/dashboard.tsx",
+            "/src/legacy/old-view.tsx"
+          ]
+        },
+        {
+          "id": "/src/header.tsx",
+          "renderedLength": 380,
+          "originalLength": 520,
+          "removedExports": [],
+          "renderedExports": ["Header"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/footer.tsx",
+          "renderedLength": 240,
+          "originalLength": 320,
+          "removedExports": [],
+          "renderedExports": ["Footer"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        }
+      ]
+    },
+    {
+      "key": "vendor-Cf3xQ2.js",
+      "fileName": "assets/vendor-Cf3xQ2.js",
+      "src": null,
+      "name": "vendor",
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "facadeModuleId": null,
+      "imports": [],
+      "dynamicImports": [],
+      "css": [],
+      "assets": [],
+      "moduleCount": 3,
+      "modules": [
+        {
+          "id": "/node_modules/react/index.js",
+          "renderedLength": 6800,
+          "originalLength": 24500,
+          "removedExports": [],
+          "renderedExports": ["useState", "useEffect", "useMemo", "Fragment", "createElement"],
+          "importedIds": [],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/node_modules/react-dom/client.js",
+          "renderedLength": 18400,
+          "originalLength": 102400,
+          "removedExports": [],
+          "renderedExports": ["createRoot", "hydrateRoot"],
+          "importedIds": ["/node_modules/react/index.js", "/node_modules/scheduler/index.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/node_modules/scheduler/index.js",
+          "renderedLength": 3200,
+          "originalLength": 9800,
+          "removedExports": [],
+          "renderedExports": ["unstable_scheduleCallback", "unstable_cancelCallback"],
+          "importedIds": [],
+          "dynamicallyImportedIds": []
+        }
+      ]
+    },
+    {
+      "key": "router-D4kP1m.js",
+      "fileName": "assets/router-D4kP1m.js",
+      "src": "src/routes/index.tsx",
+      "name": "router",
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "facadeModuleId": "/src/routes/index.tsx",
+      "imports": ["assets/vendor-Cf3xQ2.js"],
+      "dynamicImports": [],
+      "css": [],
+      "assets": [],
+      "moduleCount": 3,
+      "modules": [
+        {
+          "id": "/src/routes/index.tsx",
+          "renderedLength": 720,
+          "originalLength": 950,
+          "removedExports": [],
+          "renderedExports": ["default"],
+          "importedIds": [
+            "/src/routes/about.tsx",
+            "/src/routes/profile.tsx",
+            "/node_modules/react/index.js"
+          ],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/routes/about.tsx",
+          "renderedLength": 540,
+          "originalLength": 720,
+          "removedExports": [],
+          "renderedExports": ["default"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/routes/profile.tsx",
+          "renderedLength": 1080,
+          "originalLength": 1450,
+          "removedExports": [],
+          "renderedExports": ["default"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        }
+      ]
+    },
+    {
+      "key": "dashboard-Ee5Lx0.js",
+      "fileName": "assets/dashboard-Ee5Lx0.js",
+      "src": "src/routes/dashboard.tsx",
+      "name": "dashboard",
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "facadeModuleId": "/src/routes/dashboard.tsx",
+      "imports": ["assets/vendor-Cf3xQ2.js"],
+      "dynamicImports": [],
+      "css": [],
+      "assets": [],
+      "moduleCount": 4,
+      "modules": [
+        {
+          "id": "/src/routes/dashboard.tsx",
+          "renderedLength": 980,
+          "originalLength": 1340,
+          "removedExports": [],
+          "renderedExports": ["default"],
+          "importedIds": [
+            "/src/widgets/chart.tsx",
+            "/src/widgets/stats.tsx",
+            "/src/widgets/table.tsx",
+            "/node_modules/react/index.js"
+          ],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/widgets/chart.tsx",
+          "renderedLength": 4200,
+          "originalLength": 6800,
+          "removedExports": [],
+          "renderedExports": ["Chart"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/widgets/stats.tsx",
+          "renderedLength": 1850,
+          "originalLength": 2640,
+          "removedExports": [],
+          "renderedExports": ["Stats"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/widgets/table.tsx",
+          "renderedLength": 2380,
+          "originalLength": 3420,
+          "removedExports": [],
+          "renderedExports": ["Table"],
+          "importedIds": ["/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        }
+      ]
+    },
+    {
+      "key": "legacy-Aq9Rt7.js",
+      "fileName": "assets/legacy-Aq9Rt7.js",
+      "src": "src/legacy/old-view.tsx",
+      "name": "legacy",
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "facadeModuleId": "/src/legacy/old-view.tsx",
+      "imports": ["assets/vendor-Cf3xQ2.js"],
+      "dynamicImports": [],
+      "css": [],
+      "assets": [],
+      "moduleCount": 2,
+      "modules": [
+        {
+          "id": "/src/legacy/old-view.tsx",
+          "renderedLength": 1640,
+          "originalLength": 2380,
+          "removedExports": [],
+          "renderedExports": ["default"],
+          "importedIds": ["/src/legacy/old-helper.ts", "/node_modules/react/index.js"],
+          "dynamicallyImportedIds": []
+        },
+        {
+          "id": "/src/legacy/old-helper.ts",
+          "renderedLength": 720,
+          "originalLength": 980,
+          "removedExports": [],
+          "renderedExports": ["legacyHelper"],
+          "importedIds": [],
+          "dynamicallyImportedIds": []
+        }
+      ]
+    }
+  ]
+}
