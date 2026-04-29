@@ -849,7 +849,7 @@ function renderGraphSection(): Node {
     el(
       'p',
       { class: 'graph-note' },
-      'Each outlined cluster is a chunk; small squares inside are the source modules it bundles. Edges follow chunk-level imports (solid = static, dashed = dynamic). Modules are coloured by status: same chunk on both sides, moved to a different chunk, or only present on this side.',
+      'Each outlined box is a chunk; small squares inside are the source modules it bundles. Edges follow chunk-level imports (solid = static, dashed = dynamic). Modules are coloured by status: same chunk on both sides, moved to a different chunk, or only present on this side. Drag a chunk to reposition it, right-click a chunk name for options like hiding edges or the whole chunk, and click a module square to see its details and the import paths that pull it in.',
     ),
   );
 
@@ -983,7 +983,7 @@ function resetHiddenButton(): HTMLElement {
   const btn = el('button', {
     class: 'graph-tab reset-hidden-btn',
     type: 'button',
-    title: 'Restore all clusters and edges hidden via right-click',
+    title: 'Restore all chunks and edges hidden via right-click',
   });
   btn.textContent = 'Reset manually hidden';
   btn.hidden = !hasGraphHiding();
