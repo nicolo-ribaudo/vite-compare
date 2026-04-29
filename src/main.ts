@@ -139,11 +139,18 @@ async function handleFiles(
 }
 
 function renderAll() {
+  maybeRenderInstructions();
   maybeRenderResults();
   maybeRenderEntryAnalysis();
   maybeRenderModuleDiff();
   maybeRenderGraph();
   updateSectionNav();
+}
+
+function maybeRenderInstructions() {
+  const section = document.getElementById('instructions');
+  if (!section) return;
+  section.hidden = !!(state.a.stats || state.b.stats);
 }
 
 function updateSectionNav() {

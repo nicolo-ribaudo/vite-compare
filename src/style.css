@@ -190,6 +190,70 @@ code {
   color: var(--muted);
 }
 
+#instructions {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px 16px;
+  margin-bottom: 28px;
+  color: var(--muted);
+}
+#instructions h2 {
+  margin: 0 0 14px;
+  font-size: 17px;
+  color: var(--text);
+}
+#instructions h3 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--text);
+}
+#instructions p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+#instructions a {
+  color: var(--accent);
+}
+.instructions-steps {
+  margin: 0;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.instructions-steps > li::marker {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.instructions-code {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 8px 0;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.instructions-code code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+.instructions-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+.instructions-privacy {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+
 .summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
