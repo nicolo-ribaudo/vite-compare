@@ -38,7 +38,22 @@ export interface BundleStatsChunk {
   css: string[];
   assets: string[];
   moduleCount: number;
+  /**
+   * Authoritative chunk size in bytes (post-minification). Plugin v1.2+;
+   * older stats files lack this and fall back to summing module renderedLengths,
+   * which over-reports under Rolldown (Vite 8) because Rolldown captures
+   * per-module sizes before chunk-level minification.
+   */
+  renderedLength?: number;
   modules: BundleStatsModule[];
+}
+
+/** Authoritative chunk size: prefers chunk.renderedLength (plugin v1.2+), else sums modules. */
+export function chunkSize(ch: BundleStatsChunk): number {
+  if (typeof ch.renderedLength === 'number') return ch.renderedLength;
+  let s = 0;
+  for (const m of ch.modules) s += m.renderedLength;
+  return s;
 }
 
 export interface BundleStats {
@@ -146,14 +161,10 @@ export function compareModules(
   };
 }
 
-/** Map of manifest key → total chunk size (sum of module renderedLength). */
+/** Map of manifest key → total chunk size in bytes. */
 export function chunkSizeByKey(stats: BundleStats): Map<string, number> {
   const m = new Map<string, number>();
-  for (const ch of stats.chunks) {
-    let total = 0;
-    for (const mod of ch.modules) total += mod.renderedLength;
-    m.set(ch.key, total);
-  }
+  for (const ch of stats.chunks) m.set(ch.key, chunkSize(ch));
   return m;
 }
 

@@ -1,4 +1,4 @@
-import type { BundleStats, BundleStatsChunk } from './compare';
+import { chunkSize, type BundleStats, type BundleStatsChunk } from './compare';
 
 export interface EntryAnalysis {
   entry: string;
@@ -23,8 +23,7 @@ export interface SideAnalysis {
 
 export function analyze(stats: BundleStats): SideAnalysis {
   const chunkByFile = new Map(stats.chunks.map((c) => [c.fileName, c]));
-  const sizeFor = (ch: BundleStatsChunk) =>
-    ch.modules.reduce((s, m) => s + m.renderedLength, 0);
+  const sizeFor = (ch: BundleStatsChunk) => chunkSize(ch);
 
   // Some bundlers (e.g. rolldown with groups codeSplitting) don't set
   // isDynamicEntry on chunks that are still referenced from another chunk's

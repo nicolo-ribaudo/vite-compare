@@ -1,4 +1,4 @@
-import type { BundleStats, BundleStatsChunk } from './compare';
+import { chunkSize, type BundleStats, type BundleStatsChunk } from './compare';
 
 export type ModuleStatus = 'same' | 'moved' | 'only-here';
 export type ChunkStatus = 'same' | 'changed' | 'only-here';
@@ -184,8 +184,7 @@ function buildCluster(
     };
   });
 
-  let size = 0;
-  for (const m of modules) size += m.size;
+  const size = chunkSize(ch);
 
   return {
     key: ch.fileName,

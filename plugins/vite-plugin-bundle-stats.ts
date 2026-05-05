@@ -38,6 +38,12 @@ export interface BundleStatsChunk {
   css: string[];
   assets: string[];
   moduleCount: number;
+  /**
+   * Byte length of the emitted chunk file (post-minification). Authoritative
+   * chunk size — Rolldown's per-module `renderedLength` is captured before
+   * chunk-level minification and over-reports if summed.
+   */
+  renderedLength: number;
   modules: BundleStatsModule[];
 }
 
@@ -109,6 +115,7 @@ export function bundleStats(options: BundleStatsOptions = {}): Plugin {
           css: meta?.importedCss ? [...meta.importedCss] : [],
           assets: meta?.importedAssets ? [...meta.importedAssets] : [],
           moduleCount: modules.length,
+          renderedLength: utf8ByteLength(chunk.code),
           modules,
         });
       }
@@ -131,6 +138,11 @@ export function bundleStats(options: BundleStatsOptions = {}): Plugin {
 function makeKey(chunk: ViteOutputChunk, root: string): string {
   if (chunk.facadeModuleId) return relativize(chunk.facadeModuleId, root);
   return `_${chunk.name}.js`;
+}
+
+const textEncoder = new TextEncoder();
+function utf8ByteLength(s: string): number {
+  return textEncoder.encode(s).length;
 }
 
 function relativize(id: string, root: string): string {
